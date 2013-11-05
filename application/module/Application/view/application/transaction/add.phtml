@@ -1,0 +1,16 @@
+<?php
+$title = 'Add new transaction';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<?php
+$form->setAttribute('action', '/application/transaction/add');
+$form->prepare();
+
+echo $this->form()->openTag($form);
+echo $this->formRow($form->get('date')->setValue(date('Y-m-d')));
+echo $this->formRow($form->get('sum'));
+echo $this->formRow($form->get('tags'));
+echo $this->formRow($form->get('comment'));
+echo $this->formSubmit($form->get('submit'));
+echo $this->form()->closeTag();
