@@ -17,9 +17,36 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
-    	$this->layout('layout/ext-layout');
-    	$viewModel = new ViewModel();
-    	$viewModel->setTemplate('application/index/ext-index.phtml');
-        return $viewModel;
+    	$sm  = $this->getServiceLocator();
+    	$cfg = $sm->get('config');
+    	$allowed = array(
+            $cfg['admin']['username'] => $cfg['admin']['password']
+        );
+
+        $allow = 0;
+        foreach($allowed as $user => $password)
+        {
+            if (
+                $this->getRequest()->getServer('PHP_AUTH_USER') == $user &&
+                $this->getRequest()->getServer('PHP_AUTH_PW') == $password
+            ) 
+            {
+                $allow = 1;
+            }
+        }
+        if (!$allow) 
+        {
+            header('WWW-Authenticate: Basic realm="My Realm"');
+            header('HTTP/1.0 401 Unauthorized');
+            echo 'wrong auth';
+            exit;
+        } 
+        else 
+        {
+	    	$this->layout('layout/ext-layout');
+	    	$viewModel = new ViewModel();
+	    	$viewModel->setTemplate('application/index/ext-index.phtml');
+	        return $viewModel;
+	    }
     }
 }
