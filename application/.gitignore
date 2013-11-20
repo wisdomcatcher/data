@@ -22,3 +22,5 @@ vendor/bin
 *.rar
 *.tar
 *.zip
+
+public/js/extjs/
