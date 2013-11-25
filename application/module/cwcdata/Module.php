@@ -7,7 +7,7 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace Application;
+namespace cwcdata;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
@@ -44,7 +44,7 @@ class Module
                 'app\Model\Transaction' => function($sm) 
                 {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    $table     = new \Application\Model\Transaction($dbAdapter);
+                    $table     = new \cwcdata\Model\Transaction($dbAdapter);
                     return $table;
                 },
                 /*'Album\Model\AlbumTable' =>  function($sm) {

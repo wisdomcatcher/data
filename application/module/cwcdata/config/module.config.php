@@ -10,12 +10,38 @@
 return array(
     'router' => array(
         'routes' => array(
+            '*' => array(
+                'type' => 'Segment',
+                //'type' => 'regex',
+                'options' => array(
+                    'route' => '/:controller[/:action]',//[/]
+                    //'regex' => '/<controller>/(?<action>)?',
+                        /* OR add something like this to include the module path */
+                        // 'route' => '/support/[:controller[/:action]]',
+                    'constraints' => array(
+                        'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'cwcdata\Controller',
+                        'controller'    => 'Index',
+                        'action'        => 'index',
+                    ),
+                    //'spec' => '/%controller%/%action%',
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'wildcard' => array(
+                        'type' => 'Wildcard'
+                    )
+                )
+            ),
             'home' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
                     'route'    => '/',
                     'defaults' => array(
-                        'controller' => 'Application\Controller\Index',
+                        'controller' => 'cwcdata\Controller\Index',
                         'action'     => 'index',
                     ),
                 ),
@@ -24,12 +50,12 @@ return array(
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them
             // using the path /application/:controller/:action
-            'application' => array(
+            /*'cwcdata' => array(
                 'type'    => 'Literal',
                 'options' => array(
-                    'route'    => '/application',
+                    'route'    => '/cwcdata',
                     'defaults' => array(
-                        '__NAMESPACE__' => 'Application\Controller',
+                        '__NAMESPACE__' => 'cwcdata\Controller',
                         'controller'    => 'Index',
                         'action'        => 'index',
                     ),
@@ -49,7 +75,7 @@ return array(
                         ),
                     ),
                 ),
-            ),
+            ),*/
         ),
     ),
     'service_manager' => array(
@@ -73,8 +99,8 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Application\Controller\Index' => 'Application\Controller\IndexController',
-            'Application\Controller\Transaction' => 'Application\Controller\TransactionController'
+            'cwcdata\Controller\Index' => 'cwcdata\Controller\IndexController',
+            'cwcdata\Controller\Transaction' => 'cwcdata\Controller\TransactionController'
         ),
     ),
     'view_manager' => array(

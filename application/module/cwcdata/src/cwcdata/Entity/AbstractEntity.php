@@ -1,5 +1,5 @@
 <?php
-namespace Application\Entity;
+namespace cwcdata\Entity;
 
 abstract class AbstractEntity implements \Zend\Stdlib\ArraySerializableInterface 
 {

@@ -1,5 +1,5 @@
 <?php
-namespace Application\Entity;
+namespace cwcdata\Entity;
 
 class Transaction extends AbstractEntity {
 

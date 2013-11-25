@@ -7,7 +7,7 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace Application\Controller;
+namespace cwcdata\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
@@ -49,27 +49,21 @@ class TransactionController extends AbstractActionController
         return $viewModel;
     }
 
-    /*public function addAction()
+    public function getAction()
     {
-    	$form = new \Application\Form\TransactionForm();
-        $form->get('submit')->setValue('Add');
+        $sm      = $this->getServiceLocator();
+        $dbModel = $sm->get(self::Model);
+        $id      = (int)$this->params()->fromPost('id');
+        
+        $data    = $dbModel->getBy(array('id' => $id));
 
-        $request = $this->getRequest();
-        if ($request->isPost()) 
-        {
-        	$form->setData($request->getPost());
-        	$sm = $this->getServiceLocator();
-            $transactionTable = $sm->get('app\Model\Transaction');
-            $data = (array)$request->getPost();
-            //$transaction = new \Application\Entity\Transaction();
-            var_dump($data);
-            //$transaction->exchangeArray((array)$request->getPost());
-            $transactionTable->saveTransaction($data);
-            return $this->redirect()->toUrl('/application/transaction');
-        }
+        $viewModel =  new JsonModel(array(
+            'success' => true,
+            'data'    => $data
+        ));
 
-        return array('form' => $form);
-    }*/
+        return $viewModel;
+    }
 
     public function addAction()
     {
@@ -91,14 +85,20 @@ class TransactionController extends AbstractActionController
 
         foreach($group_fields as $group => $fields)
         {
-            foreach($fields as $field => $type)
+            foreach($fields as $post_field => $type)
             {
-                if(isset($post[$field])) 
+                if(isset($post[$post_field])) 
                 {
-                    $data[$group][$field] = $post[$field];
+                    $data_field = $post_field;
+                    if(is_array($type))
+                    {
+                        $data_field = $type[0];
+                        $type       = $type[1];
+                    }
+                    $data[$group][$data_field] = $post[$post_field];
                     if($type=='int')
                     {
-                        $data[$group][$field] = (int)$data[$group][$field];
+                        $data[$group][$data_field] = (int)$data[$group][$data_field];
                     }
                 }
             }
@@ -106,6 +106,58 @@ class TransactionController extends AbstractActionController
 
         if(!empty($data['transactionData'])) {
             $dbModel->addTransaction($data['transactionData']);
+        }
+
+        $viewModel =  new JsonModel(array(
+            'success' => true,
+        ));
+
+        return $viewModel;
+    }
+
+    public function updateAction()
+    {
+        $sm      = $this->getServiceLocator();
+        $dbModel = $sm->get(self::Model);
+
+        $post = $this->params()->fromPost();
+
+        $group_fields = array(
+            'transactionData' => array(
+                'date'    => 'date', 
+                'sum'     => 'float',
+                'comment' => 'string',
+                'tags'    => 'string'
+            )
+        );
+
+        $data = array();
+
+        foreach($group_fields as $group => $fields)
+        {
+            foreach($fields as $post_field => $type)
+            {
+                if(isset($post[$post_field])) 
+                {
+                    $data_field = $post_field;
+                    if(is_array($type))
+                    {
+                        $data_field = $type[0];
+                        $type       = $type[1];
+                    }
+                    $data[$group][$data_field] = $post[$post_field];
+                    if($type=='int')
+                    {
+                        $data[$group][$data_field] = (int)$data[$group][$data_field];
+                    }
+                }
+            }
+        }
+
+        $id = (int)$this->params()->fromPost('id');
+        if(!empty($data) && $id)
+        {
+            $dbModel->updateTransaction($id, $data['transactionData']);
         }
 
         $viewModel =  new JsonModel(array(

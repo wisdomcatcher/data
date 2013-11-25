@@ -9,6 +9,22 @@ Ext.define('cwc.view.transaction.index' ,{
     initComponent: function() {
 
         this.columns = [
+            {
+                xtype        : 'actioncolumn',
+                width        : 60,
+                menuDisabled : true,
+                items        : [
+                    {
+                        icon    : '/images/extjs/icons/edit.png',
+                        tooltip : 'Редактировать',
+                        scope   : this,
+                        handler : function(grid, rowIndex, colIndex) {
+                            var rec = grid.getStore().getAt(rowIndex);
+                            this.fireEvent('cwc_transaction_edit', this, rec);
+                        }
+                    }
+                ]
+            },
             {header: 'id',  dataIndex: 'id',  flex: 1, filter: {xtype: 'textfield'}},
             {header: 'Дата',  dataIndex: 'date',  flex: 1, filter: {xtype: 'textfield'}},
             {header: 'Сумма',  dataIndex: 'sum',  flex: 1, filter: {xtype: 'textfield'}},

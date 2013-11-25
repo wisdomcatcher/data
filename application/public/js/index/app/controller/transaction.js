@@ -2,7 +2,8 @@ Ext.define('cwc.controller.transaction', {
     extend: 'cwc.controller.base',
     views: [
         'transaction.index',
-        'transaction.add'
+        'transaction.add',
+        'transaction.edit'
     ],
     stores: [
         'transaction'

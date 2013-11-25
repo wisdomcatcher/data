@@ -146,7 +146,7 @@ Ext.define('cwc.controller.base',
             //view.el.mask('Отправка данных');
             form.submit(
             {
-                url: '/application/' + this.id + '/add',
+                url: '/' + this.id + '/add',
                 waitMsg : 'Отправка данных',
                 scope   : this,
                 params: {

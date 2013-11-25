@@ -21,11 +21,12 @@ Ext.define('cwc.view.transaction.add', {
                         items: 
                         [
                             {
-                                title: 'свойства',
-                                padding: 5,
-                                layout: 'form',
-                                border: 0,
-                                items: [
+                                title     : 'свойства',
+                                padding   : 5,
+                                layout    : 'form',
+                                border    : 0,
+                                bodyStyle : 'border: 0;',
+                                items     : [
                                     {
                                         xtype      : 'datefield',
                                         name       : 'date',

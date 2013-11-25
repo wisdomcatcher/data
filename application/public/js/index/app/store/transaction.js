@@ -4,7 +4,7 @@ Ext.define('cwc.store.transaction', {
     proxy  : {
         type: 'ajax',
         api: {
-            read: '/application/transaction/index'
+            read: '/transaction/index'
         },
         reader: {
             type: 'json',
