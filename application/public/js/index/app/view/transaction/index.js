@@ -101,7 +101,18 @@ Ext.define('cwc.view.transaction.index.grid' ,{
             },
             {header: 'id',  dataIndex: 'id',  flex: 1, filter: {xtype: 'textfield'}},
             {header: 'Дата',  dataIndex: 'date',  flex: 1, filter: {xtype: 'textfield'}},
-            {header: 'Сумма',  dataIndex: 'sum',  flex: 1, filter: {xtype: 'textfield'}},
+            {header: 'Сумма',  dataIndex: 'sum',  flex: 1, filter: {xtype: 'textfield'}, 
+                summaryType: function(rows) {
+                    var sum = 0;
+                    Ext.each(rows, function(row){
+                        sum+=parseFloat(row.get('sum'));
+                    });
+                    return sum;
+                },
+                summaryRenderer: function(value, summaryData, dataIndex) {
+                    return Ext.String.format('Итого: {0}', value); 
+                }
+            },
             {header: 'Комментарий',  dataIndex: 'comment',  flex: 1, filter: {xtype: 'textfield'}},
             {header: 'Теги',  dataIndex: 'tags',  flex: 1, filter: {xtype: 'textfield'}},
             {
@@ -147,7 +158,10 @@ Ext.define('cwc.view.transaction.index.grid' ,{
             //plugins: [gridheaderfilters],
             viewConfig : { 
                 enableTextSelection: true
-            } 
+            },
+            features: [{
+                ftype: 'summary'
+            }],
         });
 
         Ext.apply(this, {
@@ -158,6 +172,7 @@ Ext.define('cwc.view.transaction.index.grid' ,{
                 displayInfo : true,
                 displayMsg  : 'Показано {0} - {1} из {2}',
                 emptyMsg    : 'Нет данных',
+                plugins     : [{ptype: 'pagesize'}]
                 /*listeners: {
                     'render': function() {
                         this.store.reload();

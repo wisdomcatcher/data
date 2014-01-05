@@ -19,7 +19,7 @@ Ext.application({
         //'Ext.ux.grid.FiltersFeature',
         //'Ext.ux.exporter.Exporter',
         //'cwc.ux.JsonCombo',
-        //'cwc.ux.PageSize',
+        'cwc.ux.PageSize',
         //'cwc.ux.subscription_magazines_editor',
         //'cwc.ux.YearCombo'
     ],
