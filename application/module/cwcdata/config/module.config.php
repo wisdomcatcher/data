@@ -99,8 +99,9 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'cwcdata\Controller\Index' => 'cwcdata\Controller\IndexController',
-            'cwcdata\Controller\Transaction' => 'cwcdata\Controller\TransactionController'
+            'cwcdata\Controller\Index'       => 'cwcdata\Controller\IndexController',
+            'cwcdata\Controller\Transaction' => 'cwcdata\Controller\TransactionController',
+            'cwcdata\Controller\Tag'         => 'cwcdata\Controller\TagController'
         ),
     ),
     'view_manager' => array(

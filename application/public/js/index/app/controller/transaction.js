@@ -6,7 +6,8 @@ Ext.define('cwc.controller.transaction', {
         'transaction.edit'
     ],
     stores: [
-        'transaction'
+        'transaction',
+        'tag'
     ],
     init: function() 
     {

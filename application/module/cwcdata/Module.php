@@ -47,6 +47,12 @@ class Module
                     $table     = new \cwcdata\Model\Transaction($dbAdapter);
                     return $table;
                 },
+                'app\Model\Tag' => function($sm) 
+                {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $table     = new \cwcdata\Model\Tag($dbAdapter);
+                    return $table;
+                },
                 /*'Album\Model\AlbumTable' =>  function($sm) {
                     $tableGateway = $sm->get('AlbumTableGateway');
                     $table = new AlbumTable($tableGateway);

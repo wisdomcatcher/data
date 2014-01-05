@@ -35,6 +35,19 @@ class Transaction extends TableGateway
             ->order(array('T.date DESC', 'T.id DESC'))
             ->limit($limit)
             ->offset($offset);
+
+        if(!empty($params['filters']))
+        {
+            foreach($params['filters'] as $filter)
+            {
+                switch($filter['property'])
+                {
+                    case 'tag_id':
+                        $select->where->equalTo('TAG.id', $filter['value']);
+                        break;
+                }
+            }
+        }
         
         $selectString = $sql->getSqlStringForSqlObject($select);
         $result       = $db->query($selectString)->execute();

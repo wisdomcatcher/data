@@ -1,12 +1,85 @@
 Ext.define('cwc.view.transaction.index' ,{
+    extend: 'Ext.panel.Panel',
+
+    layout: 'border',
+
+    title : 'Транзакции',
+
+    items: [
+        {
+            region           : 'west',
+            split            : true,
+            collapsible      : true,
+            animCollapse     : true,
+            margins          : '0 0 0 0',
+            width            : 200,
+            hideCollapseTool : true,
+            header           : false,
+            xtype            : 'cwc_transaction_tags',
+        },
+        {
+            region: 'center',
+            xtype: 'cwc_transaction_list'
+        }
+    ]
+});
+
+
+Ext.define('cwc.view.transaction.tags.grid' ,{
+    extend: 'Ext.grid.Panel',
+    alias: 'widget.cwc_transaction_tags',
+    title: 'Теги',
+    store: {type: 'tag', autoLoad: true},
+    initComponent: function() {
+        this.columns = [
+            {header: 'Теги',  dataIndex: 'name',  flex: 1, filter: {xtype: 'textfield'}},
+        ];
+
+        var gridheaderfilters = new Ext.ux.grid.plugin.HeaderFilters({ 
+            stateful              : false, 
+            ensureFilteredVisible : false,
+            reloadOnChange        : false
+        });
+
+        Ext.apply(this, {
+            viewConfig : { 
+                enableTextSelection: true
+            },
+            allowDeselect: true
+        });
+
+        this.callParent(arguments);
+    },
+    listeners: {
+        //scope: this,
+        'select' : function(grid, rec) {
+            //console.log('test', this.next('grid'));
+            var store = this.next('grid').store;
+            store.filters.removeAtKey('tag_id');
+            store.filters.add('tag_id', new Ext.util.Filter({
+                property: 'tag_id',
+                value   : rec.get('id')
+            }));
+            store.reload();
+        },
+        'deselect': function() {
+            var store = this.next('grid').store;
+            store.filters.removeAtKey('tag_id');
+            store.reload();
+        }
+    }
+});
+
+Ext.define('cwc.view.transaction.index.grid' ,{
     extend: 'Ext.grid.Panel',
     alias: 'widget.cwc_transaction_list',
 
-    title: 'Транзакции',
+    //title: 'Транзакции',
 
-    store: 'transaction',
+    store: {type: 'transaction'},
 
     initComponent: function() {
+        //this.store = {type: 'transaction', autoLoad: true};
 
         this.columns = [
             {
@@ -88,7 +161,7 @@ Ext.define('cwc.view.transaction.index' ,{
             {
                 xtype: 'toolbar',
                 items : [
-                    {
+                    /*{
                         text    : 'Искать',
                         iconCls : 'search-ico',
                         scope   : this,
@@ -103,7 +176,7 @@ Ext.define('cwc.view.transaction.index' ,{
                         handler : function() {
                             this.resetHeaderFilters();
                         }
-                    },
+                    },*/
                     '->',
                     {
                         text    : 'Добавить',
@@ -118,5 +191,11 @@ Ext.define('cwc.view.transaction.index' ,{
         });
 
         this.callParent(arguments);
+    },
+    onRender: function(arguments) {
+        this.callParent(arguments);
+        //this.store.pageSize = page_size-5;
+        this.store.getProxy().extraParams = this.myparams;
+        this.store.load();
     }
 });
