@@ -13,7 +13,9 @@ Ext.define('cwc.store.transaction', {
             totalProperty: 'total'
         }
     },
+    //pageSize: 1,
     remoteFilter: true,
+    autoLoad:true,
     fields        : [
         {name: 'id'},
         {name: 'date'},

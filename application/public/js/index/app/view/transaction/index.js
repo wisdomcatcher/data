@@ -76,7 +76,7 @@ Ext.define('cwc.view.transaction.index.grid' ,{
 
     //title: 'Транзакции',
 
-    store: {type: 'transaction'},
+    store: 'transaction',//{type: 'transaction', autoLoad: false},
 
     initComponent: function() {
         //this.store = {type: 'transaction', autoLoad: true};
@@ -151,12 +151,17 @@ Ext.define('cwc.view.transaction.index.grid' ,{
 
         Ext.apply(this, {
             dockedItems: [{
-                xtype: 'pagingtoolbar',
-                store: this.store,
-                dock: 'bottom',
-                displayInfo: true,
+                xtype       : 'pagingtoolbar',
+                store       : this.store,
+                dock        : 'bottom',
+                displayInfo : true,
                 displayMsg  : 'Показано {0} - {1} из {2}',
-                emptyMsg    : 'Нет данных'
+                emptyMsg    : 'Нет данных',
+                /*listeners: {
+                    'render': function() {
+                        this.store.reload();
+                    }
+                }*/
             },
             {
                 xtype: 'toolbar',
@@ -191,11 +196,11 @@ Ext.define('cwc.view.transaction.index.grid' ,{
         });
 
         this.callParent(arguments);
-    },
+    }/*,
     onRender: function(arguments) {
         this.callParent(arguments);
         //this.store.pageSize = page_size-5;
         this.store.getProxy().extraParams = this.myparams;
         this.store.load();
-    }
+    }*/
 });
