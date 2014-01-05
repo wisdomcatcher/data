@@ -53,18 +53,19 @@ Ext.define('cwc.view.transaction.tags.grid' ,{
     listeners: {
         //scope: this,
         'select' : function(grid, rec) {
-            //console.log('test', this.next('grid'));
             var store = this.next('grid').store;
             store.filters.removeAtKey('tag_id');
             store.filters.add('tag_id', new Ext.util.Filter({
                 property: 'tag_id',
                 value   : rec.get('id')
             }));
-            store.reload();
         },
-        'deselect': function() {
+        'deselect': function(grid, rec) {console.log('test2');
             var store = this.next('grid').store;
             store.filters.removeAtKey('tag_id');
+        },
+        'selectionchange': function() {
+            var store = this.next('grid').store;
             store.reload();
         }
     }
