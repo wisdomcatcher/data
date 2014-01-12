@@ -89,7 +89,7 @@ Ext.define('cwc.view.transaction.index.grid' ,{
                 menuDisabled : true,
                 items        : [
                     {
-                        icon    : '/images/extjs/icons/edit.png',
+                        icon    : '/img/extjs/icons/edit.png',
                         tooltip : 'Редактировать',
                         scope   : this,
                         handler : function(grid, rowIndex, colIndex) {
@@ -201,7 +201,7 @@ Ext.define('cwc.view.transaction.index.grid' ,{
                     '->',
                     {
                         text    : 'Добавить',
-                        iconCls : 'add-ico',
+                        //iconCls : 'add-ico',
                         scope   : this,
                         handler : function() {
                             this.fireEvent('cwc_transaction_add', this);
