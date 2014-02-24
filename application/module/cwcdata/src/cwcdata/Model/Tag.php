@@ -11,6 +11,7 @@ use Zend\Db\Sql\Predicate\Expression;
 
 class Tag extends TableGateway
 {
+    public $entity;
     public function __construct(Adapter $adapter)
     {
         parent::__construct('cwc_tag', $adapter, null, new \Zend\Db\ResultSet\HydratingResultSet(new \Zend\Stdlib\Hydrator\ArraySerializable, new \cwcdata\Entity\Tag));
@@ -18,6 +19,9 @@ class Tag extends TableGateway
 
     public function getList($offset = 0, $limit = 100, $params = array())
     {
+        $table_tag = 'cwc_transaction_tag';
+        $tagged    = true;
+
         $db     = $this->adapter;
         $sql    = new Sql($db);
         $select = $sql->select()
@@ -26,6 +30,7 @@ class Tag extends TableGateway
                 new Expression('SQL_CALC_FOUND_ROWS T.id AS id'), 
                 'name'
             ))
+            ->join(array('TT' => $table_tag), 'TT.tag_id = T.id', array())
             ->group('T.id')
             ->order(array('T.name'));
         if($limit) {

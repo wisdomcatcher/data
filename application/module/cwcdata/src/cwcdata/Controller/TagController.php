@@ -15,11 +15,15 @@ use Zend\View\Model\JsonModel;
 
 class TagController extends AbstractActionController
 {
-	const Model = 'app\Model\Tag';
+	const Model = 'cwcdata\Model\Tag';
     public function indexAction()
     {
-        $sm      = $this->getServiceLocator();
-        $dbModel = $sm->get(self::Model);
+        $sm          = $this->getServiceLocator();
+        $entity_id   = (int)$this->params()->fromQuery('entity_id', 0);
+        $entityModel = $sm->get('cwcdata\Model\Entity');
+        $dbModel     = $sm->get(self::Model);
+        $entity      = $entityModel->getBy(array('id' => $entity_id));
+        $dbModel->entity = $entity;
         $filters = $this->params()->fromQuery('filter', '');
         if(!empty($filters))
         {

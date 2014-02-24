@@ -39,21 +39,20 @@ var ProcessLocation = function(app, token, opts)
     //{
     //  Ext.History.add(componentToken);
     //}
-    var controller = 'transaction';
+    var controller = 'data';
     var action     = 'index';
 
     var segments = token ? token.split('/') : {};
 
-    if(segments[0])
-    {
+    if(segments[0]) {
         controller = segments[0];
     }
 
-    if(segments[1])
-    {
+    if(segments[1]) {
         action = segments[1];
     }
 
+    var param_id = '';
     var params = {opts: opts};
     if(segments[2])
     {
@@ -61,9 +60,17 @@ var ProcessLocation = function(app, token, opts)
         {
             if(i%2==1)
             {
-                params[segments[i-1]] = segments[i];
+                var cur_name  = segments[i-1];
+                var cur_value = segments[i];
+                if(cur_name == 'id') {
+                    param_id = cur_value;
+                }
+                params[cur_name] = cur_value;
             }
         }
+    }
+    if(controller == 'data' && action == 'index' && param_id == '') {
+        params['id'] = cwc_initial_entity_id; 
     }
 
     action = action + 'Action';

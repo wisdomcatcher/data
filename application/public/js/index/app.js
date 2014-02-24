@@ -28,7 +28,8 @@ Ext.application({
     appFolder: 'js/index/app',
 
     controllers: [
-        'transaction'
+        'data',
+        'entity'
     ],
 
     launch: function() {
@@ -89,6 +90,21 @@ Ext.application({
         } else 
         {
             Ext.History.add(componentToken);
+        }
+    },
+    field_types: {
+        '1' : {
+            xtype: 'textfield',
+        },
+        '2' : {
+            xtype  : 'datefield',
+            format : 'Y-m-d',
+            value  : Ext.Date.format(new Date(), 'Y-m-d')
+        },
+        '3' : {
+            xtype      : 'textfield',
+            allowBlank : false,
+            vtype      : 'Numeric'
         }
     }
 });

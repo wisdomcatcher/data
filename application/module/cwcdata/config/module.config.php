@@ -101,7 +101,9 @@ return array(
         'invokables' => array(
             'cwcdata\Controller\Index'       => 'cwcdata\Controller\IndexController',
             'cwcdata\Controller\Transaction' => 'cwcdata\Controller\TransactionController',
-            'cwcdata\Controller\Tag'         => 'cwcdata\Controller\TagController'
+            'cwcdata\Controller\Tag'         => 'cwcdata\Controller\TagController',
+            'cwcdata\Controller\Entity'      => 'cwcdata\Controller\EntityController',
+            'cwcdata\Controller\Data'        => 'cwcdata\Controller\DataController'
         ),
     ),
     'view_manager' => array(

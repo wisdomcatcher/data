@@ -41,16 +41,28 @@ class Module
     {
         return array(
             'factories' => array(
-                'app\Model\Transaction' => function($sm) 
+                'cwcdata\Model\Transaction' => function($sm) 
                 {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     $table     = new \cwcdata\Model\Transaction($dbAdapter);
                     return $table;
                 },
-                'app\Model\Tag' => function($sm) 
+                'cwcdata\Model\Tag' => function($sm) 
                 {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     $table     = new \cwcdata\Model\Tag($dbAdapter);
+                    return $table;
+                },
+                'cwcdata\Model\Entity' => function($sm) 
+                {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $table     = new \cwcdata\Model\Entity($dbAdapter);
+                    return $table;
+                },
+                'cwcdata\Model\Data' => function($sm) 
+                {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $table     = new \cwcdata\Model\Data($dbAdapter);
                     return $table;
                 },
                 /*'Album\Model\AlbumTable' =>  function($sm) {

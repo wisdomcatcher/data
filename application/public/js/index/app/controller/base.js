@@ -10,7 +10,8 @@ Ext.define('cwc.controller.base',
             hash = this.id + '/index';
         //}
 
-        window.location.hash = hash;
+        //window.location.hash = hash;
+        Ext.History.fireEvent('change', hash);
     },
 
     indexAction : function(params)
@@ -40,18 +41,18 @@ Ext.define('cwc.controller.base',
         }
     },
 
-    load_edit_form: function(view, id)
+    load_edit_form: function(view, id, params)
     {
+        params = params || {};
         view.el.mask('Загрузка');
         view.down('form').getForm().load(
         {
             url     : '/' + this.id + '/get',
             //waitMsg : 'Загрузка',
             scope   : view,
-            params  : 
-            {
+            params  : Ext.apply({
                 id : id
-            },
+            }, params),
             success : function() 
             {
                 this.el.unmask();
@@ -63,21 +64,6 @@ Ext.define('cwc.controller.base',
     {
         var view = Ext.widget('cwc_' + this.id + '_edit', {myparams: params});
         this.load_edit_form(view, params.id);
-        /*view.el.mask('Загрузка');
-        view.down('form').getForm().load(
-        {
-            url     : '/' + this.id + '/get',
-            //waitMsg : 'Загрузка',
-            scope   : view,
-            params  : 
-            {
-                id : params.id
-            },
-            success : function() 
-            {
-                this.el.unmask();
-            }
-        });*/
     },
 
     open_add_form: function(params)
@@ -126,8 +112,10 @@ Ext.define('cwc.controller.base',
                     //else
                     //{
                         view.close();
+                        //Ext.History.add('users/edit/id/' + rec.get('id'));
+                        //this.indexAction();
                         this.redirect_to_index();
-                        this.getStore(this.id).reload();
+                        //this.getStore(this.id).reload();
                     }
                 }
             });
@@ -166,7 +154,7 @@ Ext.define('cwc.controller.base',
                     {
                         view.close();
                         this.redirect_to_index();
-                        this.getStore(this.id).reload();
+                        //this.getStore(this.id).reload();
                     }
                 }
             });
