@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ciwic" default="build" basedir="./">
+
+	<target name="build" depends="prepare, sencha"/>
+
+	<property name="applicationDir" value="${basedir}/application" />
+	<property name="buildDir" value="${basedir}/build" />
+
+	<target name="prepare">
+    	<mkdir dir="${buildDir}" />
+    	<mkdir dir="${buildDir}/logs" />
+    </target>
+
+	<target name="sencha" description="sencha" if="false">
+		<property name="senchaLogs" value="${buildDir}/logs" />
+		<property name="junit" value="${phpunitLogs}/phpunit.xml" />
+        <exec dir="${applicationDir}/public/js" executable="sencha" failonerror="false" osfamily="unix" output="${buildDir}/logs/sencha.txt">
+            <arg line="-sdk extjs compile -classpath=index page -yui -in build.html -out build/ext.html"/>
+        </exec>
+	</target>
+
+</project>
