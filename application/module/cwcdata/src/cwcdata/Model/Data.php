@@ -34,11 +34,11 @@ class Data extends AbstractTableGateway
         foreach($this->entity->fields as $field) {
             $columns[] = $field['name'];
         }
-
+        
         $select = $sql->select()
             ->from(array('T'=>$table))
             ->columns($columns)
-            ->order(array('T.id DESC'));
+            ->order(array('T.date DESC'));
         if($tagged) {
             $select
                 ->join(array('TT' => $table_tag), 'TT.data_id = T.id', array(), 'left')
