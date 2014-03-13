@@ -163,7 +163,7 @@ Ext.define('cwc.view.data.index.grid' ,{
         ];
 
         Ext.each(entity.fields, function(field){
-            columns[columns.length] = Ext.apply(types[field['field_type']], {text: field.name, dataIndex: field.field_name, flex: 1});
+            columns[columns.length] = Ext.apply(types[field['field_type']], {text: field.name, dataIndex: field.field_name, flex: 1, filter: {xtype: 'textfield'}});
             fields[fields.length]   = {name: field.field_name};
         },this);
 
@@ -250,6 +250,7 @@ Ext.define('cwc.view.data.index.grid' ,{
         });
 
         Ext.apply(this, {
+            plugins: [gridheaderfilters],
             viewConfig : { 
                 enableTextSelection: true
             },
@@ -271,6 +272,24 @@ Ext.define('cwc.view.data.index.grid' ,{
             {
                 xtype: 'toolbar',
                 items : [
+                    {
+                        text    : 'Искать',
+                        iconCls : 'search-ico',
+                        scope   : this,
+                        handler : function() {
+                            this.applyHeaderFilters();console.log(this);
+                            //this.getStore().loadPage(1);
+                        }
+                    },
+                    {
+                        text    : 'Сброс поиска',
+                        iconCls : 'clear-ico',
+                        scope   : this,
+                        handler : function() {
+                            this.resetHeaderFilters(false);
+                            this.store.clearFilter(true);
+                        }
+                    },
                     '->',
                     {
                         text    : 'Добавить',

@@ -62,6 +62,9 @@ class Data extends AbstractTableGateway
                     case 'tag_id':
                         $select->where->equalTo('TT.tag_id', $filter['value']);
                         break;
+                    case 'date':
+                        $select->where->like('T.date', '%' . $filter['value'] . '%');
+                        break;
                 }
             }
         }

@@ -19,6 +19,9 @@ Ext.define('cwc.controller.data', {
                     var view = Ext.widget('cwc_data_edit', {myparams: {id: rec.get('id')}, entity: entity});
                     this.load_edit_form(view, rec.get('id'), {entity_id: entity.id});
                 },
+                headerfilterchange : function(grid, filters, last_filters, active) {
+                    grid.getStore().loadPage(1);
+                },
             },
             'cwc_data_add button[action=add]': {
                 click: this.add_db_record
