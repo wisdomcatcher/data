@@ -129,7 +129,7 @@ class Data extends AbstractTableGateway
         if(!empty($data['tags']))
         {//tags must be reserved and never been used by user
             $tags = explode(',', trim($data['tags']));
-            array_walk($tags, 'trim');
+            $tags = array_map('trim', $tags);
         }
 
         $this->adapter->getDriver()->getConnection()->beginTransaction();
