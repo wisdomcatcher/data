@@ -39,6 +39,7 @@ class Data extends AbstractTableGateway
             ->from(array('T'=>$table))
             ->columns($columns)
             ->order(array('T.date DESC'));
+        $select->quantifier(new Expression('SQL_CALC_FOUND_ROWS'));
         if($tagged) {
             $select
                 ->join(array('TT' => $table_tag), 'TT.data_id = T.id', array(), 'left')
